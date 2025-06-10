@@ -1,4 +1,4 @@
-function [eqs, cq_mass, mix_s, status, cstatus, cq_vol] = computeWellContributionsSingleWell(wellmodel, wellSol, resmodel, q_s, pBH, packed,dt)
+function [eqs, cq_mass, mix_s, status, cstatus, cq_vol] = computeWellContributionsSingleWell(wellmodel, wellSol, wellSol0, resmodel, q_s, pBH, packed,dt)
 % Main internal function for computing well equations and source terms
 
 %{
@@ -54,7 +54,7 @@ eqs = cell(1, numPh);
 for ph = 1:numPh
     if ~isempty(wellmodel.W.SC)
         % wbs = wellmodel.W.CS * (pBH - wellSol.bhp)/dt;
-        eqs{ph} = q_s{ph} - sum(cq_s{ph}) - wellmodel.W.SC * (pBH - wellSol.bhp)/dt;
+        eqs{ph} = q_s{ph} - sum(cq_s{ph}) - mix_s_ad{ph} * wellmodel.W.SC * (pBH - wellSol0.bhp)/dt;
     else
         eqs{ph} = q_s{ph} - sum(cq_s{ph}) ;
     end
