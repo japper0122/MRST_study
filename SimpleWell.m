@@ -226,7 +226,7 @@ classdef SimpleWell < PhysicalModel
         function [weqs, ctrlEq, extra, extraNames, qMass, qVol, wellSol] = computeWellEquations(well, wellSol0, wellSol, resmodel, q_s, bh, packed, dt, iteration)
             % 互换了iteration,dt
             % Compute well equations and well phase/pseudocomponent source terms
-            [weqs, qMass, mix_s, status, cstatus, qVol] = computeWellContributionsSingleWell(well, wellSol, resmodel, q_s, bh, packed, dt);
+            [weqs, qMass, mix_s, status, cstatus, qVol] = computeWellContributionsSingleWell(well, wellSol, wellSol0, resmodel, q_s, bh, packed, dt);
             ctrlEq =  setupWellControlEquationsSingleWell(well, wellSol0, wellSol, bh, q_s, status, mix_s, resmodel);
 
             % Update well properties which are not primary variables
